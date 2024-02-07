@@ -1,0 +1,290 @@
+.container {
+  max-width: 900px;
+  margin: 15px auto;
+  padding: 20px;
+  height: 90vh;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.7);
+  border-radius: 8px;
+}
+
+.addButton {
+  background-color: #4caf50;
+  color: white;
+  padding: 10px 15px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  float: right;
+  margin-bottom: 20px;
+}
+
+.table {
+  width: 100%;
+  margin-top: 20px;
+  border-collapse: collapse;
+}
+
+.table th, .table td {
+  border: 1px solid #ddd;
+  padding: 10px;
+  text-align: center;
+}
+
+.table th {
+  background-color: #4caf50;
+  color: white;
+}
+
+.popup {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.popupContent {
+  background: rgb(249, 248, 248);
+  padding: 10px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.7);
+  width: 30vw;
+  height: 300px;
+}
+
+.popup label {
+  display: block;
+  margin-bottom: 10px;
+}
+
+.popup input {
+  width: 95%;
+  padding: 8px;
+  margin-bottom: 20px;
+  
+}
+
+.popupButtons {
+  display: flex;
+  justify-content: space-between;
+}
+
+.popup button {
+  padding: 10px 15px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.popup button:nth-child(1) {
+  background-color: #4caf50;
+  color: white;
+}
+
+.popup button:nth-child(2) {
+  background-color: #f44336;
+  color: white;
+}
+
+.sno{
+  width: 10%;
+}
+
+.actionbutton {
+  border: none;
+  cursor: pointer;
+  position: relative;
+  background-color: white;
+}
+
+.actionbutton::after {
+  content: '';
+  display: block;
+  position: absolute;
+  width: 100%;
+  height: 2px;
+  background-color: #000000;
+  bottom: 0;
+  left: 0;
+}
+
+.courseButton{
+  border: none;
+  cursor: pointer;
+  position: relative;
+  background-color: white;
+}
+
+.courseButton::after {
+  content: '';
+  display: block;
+  position: absolute;
+  width: 100%;
+  height: 1px;
+  background-color: #000000;
+  bottom: 1px;
+  left: 0;
+}
+
+/* Module.module.css */
+
+.modulecontainer {
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.moduleheader{
+  display: flex;
+  justify-content: space-between;
+}
+.addModuleButton {
+  background-color: #4caf50;
+  color: #fff;
+  padding: 10px 15px;
+  font-size: 16px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-top: 10px;
+  height: 35px;
+}
+
+.addModuleButton:hover {
+  background-color: #45a049;
+}
+
+.modulebody {
+  margin: 20px auto;
+  width: 50%;
+}
+
+.moduledetails {
+  background-color: #d3cece;
+  border: 1px solid #ddd;
+  padding: 10px;
+  margin-bottom: 15px;
+  border-radius: 4px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.moduledetails h3 {
+  color: #333;
+  margin-bottom: 5px;
+}
+
+.moduledetails p {
+  color: #666;
+}
+.slidebutton{
+  background-color: #000000;
+  color: white;
+  padding: 8px;
+  font-size: 12px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-top: 10px;
+  
+}
+
+.moduledelete{
+  border: none;
+  padding: 8px;
+  font-size: 18px;
+  background-color: #d3cece;
+  cursor: pointer;
+}
+
+.slideInputContainer {
+  margin-top: 10px;
+  display: flex;
+  flex-direction: column;
+}
+
+.slideInputContainer input {
+  width: 70%;
+  padding: 8px;
+  margin-right: 10px;
+}
+
+.slideInputContainer button {
+  background-color: #4caf50;
+  color: white;
+  padding: 5px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-top: 10px;
+  font-size: 11px;
+}
+
+.mappedSlides {
+  margin-top: 10px;
+}
+
+.mappedSlide {
+  margin-top: 5px;
+}
+
+.bgimage {
+  height: 55vh;
+  background-image: url('https://mdbootstrap.com/img/new/textures/full/171.jpg');
+  background-size: cover;
+  background-position: center;
+}
+/* Style for the card container */
+.cardcontainer {
+  margin-top: -100px;
+  width: 50vw;
+  margin-left: auto;
+  margin-right: auto;
+  height: 45vh;
+}
+
+/* Style for the card body */
+.cardbody {
+  padding: 2rem;
+  text-align: center;
+  background: hsla(0, 0%, 100%, 0.8);
+  backdrop-filter: blur(30px);
+  border-radius: 10px;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.4);
+  height: 300px;
+}
+
+/* Additional styling for form elements */
+.inputname{
+  display: flex;
+}
+.forminput {
+  padding: 0.5rem;
+  margin: 0.7rem;
+  width: 40%;
+}
+
+.forminput::placeholder {
+  font-weight: bold; 
+}
+.inputs{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 0.5rem;
+  
+}
+.submitbtn {
+  background-color: #1266f1;
+  width: 42.5%;
+  color: white;
+  border: none;
+  font-weight: bolder;
+  padding: 0.5rem;
+  margin: 0.7rem;
+  border-radius: 5px;
+  cursor: pointer;
+}

@@ -225,12 +225,24 @@
 
 .mappedSlides {
   margin-top: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
 }
 
 .mappedSlide {
   margin-top: 5px;
 }
 
+.slidebuttons{
+  display: flex;
+  gap:1rem;
+}
+
+.slidebtn{
+  padding: 0.25rem 0.75rem;
+  border-radius: 1rem;
+}
 .bgimage {
   height: 55vh;
   background-image: url('https://mdbootstrap.com/img/new/textures/full/171.jpg');
@@ -287,4 +299,11 @@
   margin: 0.7rem;
   border-radius: 5px;
   cursor: pointer;
+}
+
+.individualslide{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 1rem;
 }

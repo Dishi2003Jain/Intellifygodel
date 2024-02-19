@@ -32,10 +32,11 @@ export default function Home() {
   };
 
   const handleSaveCourse = async () => {
+    console.log(newCourseName)
     try {
       // Generate a slug based on the course name (you can use a library for this)
       const newCourseSlug = slugify(newCourseName, { lower: true });
-
+       console.log(newCourseName);
       const response = await fetch('/api/course', {
         method: 'POST',
         headers: {
@@ -99,9 +100,10 @@ export default function Home() {
   };
 
   const handleSubmit = async (event) => {
-    event.preventDefault();
-    const file = event.target.file.files[0];
-    handleFileUpload(file);
+    handleSaveCourse();
+    // event.preventDefault();
+    // const file = event.target.file.files[0];
+    // handleFileUpload(file);
   };
   return (
     <PrivateRoute>
@@ -121,19 +123,18 @@ export default function Home() {
               value={newCourseName}
               onChange={(e) => setNewCourseName(e.target.value)}
             />
-    
-      <form onSubmit={handleSubmit}>
-        <input type="file" name="file" required />
-        <button type="submit">Upload File</button>
+      {/* <form onSubmit={handleSaveCourse}>
+        <input type="file" name="file" />
+        <button type="submit">Save</button>
       </form>
       {contentSnippet && (
         <div>
           <h2>File Content Snippet</h2>
           <p>{contentSnippet}</p>
         </div>
-      )}
+      )} */}
        <div className={styles.popupButtons}>
-              {/* <button onClick={handleSaveCourse}>Save</button> */}
+              <button onClick={handleSaveCourse}>Save</button>
               <button onClick={handleClosePopup}>Close</button>
             </div>
         </div>

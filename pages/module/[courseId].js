@@ -31,6 +31,8 @@ const Module = () => {
     },
   ]);
   const [editingSlideId, setEditingSlideId] = useState(null);
+  const [concepts, setConcepts] = useState([]);
+  const [currentConcept, setCurrentConcept] = useState('');
   const router = useRouter();
   const { courseId } = router.query;
 
@@ -69,7 +71,6 @@ const Module = () => {
         setLoading(false);
       }
     };
-  
     fetchModulesAndSlides();
   });
   
@@ -461,7 +462,17 @@ const Module = () => {
       console.error('Error moving slide down:', error);
     }
   };
-  
+  const addConcept = () => {
+    if (currentConcept.trim() !== '') { // Prevent adding empty concepts
+      setConcepts([...concepts, currentConcept]); // Add the current concept to the concepts list
+      setCurrentConcept(''); // Clear the input field
+    }
+  };
+
+  // Function to handle input changes
+  const handleInputChange = (e) => {
+    setCurrentConcept(e.target.value);
+  };
   return (
     <PrivateRoute>
       <div className={styles.modulecontainer}>
@@ -528,6 +539,7 @@ const Module = () => {
           <option value="Content Slide">Content Slide</option>
           <option value="Quiz Slide">Quiz Slide</option>
           <option value="Progress Slide">Progress Slide</option>
+          <option value="Concept Slide">Concept Slide</option>
         </select>
 
         {selectedSlideType === 'Progress Slide' && (
@@ -540,6 +552,27 @@ const Module = () => {
     <option value="Tool">Tool</option>
   </select>
 )}
+       {selectedSlideType === 'Concept Slide' && (
+        <div>
+          <select value={bodyType} onChange={(e) => setBodyType(e.target.value)}>
+            <option value="Circle">Circle</option>
+            <option value="Square">Square</option>
+            <option value="Tool">Tool</option>
+          </select>
+          <input
+            type="text"
+            value={currentConcept}
+            onChange={handleInputChange}
+            placeholder="Enter new concept"
+          />
+          <button onClick={addConcept}>Add Concept</button>
+          <ul>
+            {concepts.map((concept, index) => (
+              <div key={index}>{concept}</div>
+            ))}
+          </ul>
+        </div>
+      )}
 
         {selectedSlideType !== 'Quiz Slide' && (
           <input

@@ -133,6 +133,7 @@ const Module = () => {
     setNewSlideBody('');
     setNewSlideMedia('');
     setQuestions([{ question: "", options: [""], correctOptionIndex: null }]);
+    setEditingSlideId(null);
   };
   
   const handleOptionChange = (e, questionIndex, optionIndex) => {

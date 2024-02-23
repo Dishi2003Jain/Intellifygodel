@@ -21,7 +21,7 @@ export default async function handler(req, res) {
       const passwordMatch = await bcrypt.compare(password, existingAdmin.password);
       if (passwordMatch){
         const token = jwt.sign({ userId: existingAdmin._id }, process.env.NEXT_PUBLIC_JWT_SECRET, {
-          expiresIn: '1h',
+          expiresIn: '2d',
         });
         return res.status(200).json({ token, message: 'Logged in successfully.' });
       } else {

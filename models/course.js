@@ -58,9 +58,12 @@ const moduleSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  details: { 
+    type: String,
+    required: false,
+  },
   slug: {
     type: String,
-    required: true,
   },
   bodyTypeCounts: {
     Circle: { type: Number, default: 0 },

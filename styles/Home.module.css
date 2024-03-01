@@ -53,7 +53,6 @@
   border-radius: 8px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.7);
   width: 30vw;
-  height: 300px;
 }
 
 .popup label {
@@ -199,6 +198,13 @@
   background-color: #d3cece;
   cursor: pointer;
 }
+
+.modulealignment{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 
 .slideInputContainer {
   margin-top: 10px;

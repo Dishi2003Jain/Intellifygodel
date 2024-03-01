@@ -33,6 +33,7 @@ const Module = () => {
   const [editingSlideId, setEditingSlideId] = useState(null);
   const [concepts, setConcepts] = useState([]);
   const [currentConcept, setCurrentConcept] = useState('');
+  const [newModuleDetails , setNewModuleDetails] = useState('');
   const router = useRouter();
   const { courseId } = router.query;
 
@@ -110,6 +111,7 @@ const Module = () => {
         },
         body: JSON.stringify({
           module_name: newModuleName,
+          details: newModuleDetails,
           slides: [],
         }),
       });
@@ -118,6 +120,8 @@ const Module = () => {
         const newModule = await response.json();
         setModules([...modules, newModule]);
         handleClosePopup();
+        setNewModuleName('');
+        setNewModuleDetails('');
       } else {
         console.error("Error adding module:", response.statusText);
       }
@@ -137,19 +141,12 @@ const Module = () => {
   };
   
   const handleOptionChange = (e, questionIndex, optionIndex) => {
-    // Clone the questions array
     const updatedQuestions = [...questions];
-    // Ensure we're working with a valid question and option indices
     if (questionIndex >= 0 && optionIndex >= 0) {
-      // Access the specific question
       const question = updatedQuestions[questionIndex];
-      // Clone the options array for immutability
       const updatedOptions = [...question.options];
-      // Update the specific option
       updatedOptions[optionIndex] = e.target.value;
-      // Update the question's options
       question.options = updatedOptions;
-      // Update the state
       setQuestions(updatedQuestions);
     }
   };
@@ -158,7 +155,6 @@ const Module = () => {
   const handleAddOption = (questionIndex) => {
     const updatedQuestions = questions.map((question, index) => {
       if (index === questionIndex) {
-        // Add a new empty string to the options array
         return { ...question, options: [...question.options, ""] };
       }
       return question;
@@ -168,22 +164,18 @@ const Module = () => {
   };
   
   const handleSaveSlide = async (moduleIndex) => {
-    // Determine if we are adding a new slide or updating an existing one
     const isEditing = editingSlideId !== null;
-    const method = isEditing ? "PUT" : "POST"; // Use PUT for update, POST for add
+    const method = isEditing ? "PUT" : "POST";
     let url = `/api/slide?courseId=${courseId}`;
-  
-    // If updating, append the slideId to the URL
     if (isEditing) {
       url += `&slideId=${encodeURIComponent(editingSlideId)}`;
     }
   
     const payload = {
-      moduleId: modules[moduleIndex]._id, // Assuming the module ID is needed for both adding and updating
+      moduleId: modules[moduleIndex]._id,
       slide_type: selectedSlideType,
       slide_name: newSlideName,
       slide_body: newSlideBody,
-      // Add other fields like why_learn, bodyType, questions as needed
       why_learn: newSlideMedia ? newSlideMedia : undefined,
       bodyType: bodyType,
       questions: questions,
@@ -202,7 +194,7 @@ const Module = () => {
         console.error("Failed to save slide:", await response.text());
         return;
       }
-      const savedSlide = await response.json(); // Assuming the server returns the saved slide
+      const savedSlide = await response.json(); 
       console.log('Slide saved:', savedSlide);
       if (!isEditing) {
         const updatedModules = [...modules];
@@ -213,8 +205,7 @@ const Module = () => {
       } else{
         setShowAddSlideInput(false);
       }
-  
-      // Reset form and editing state
+
       resetFormAndEditingState();
     } catch (error) {
       console.error("Error saving slide:", error);
@@ -232,90 +223,6 @@ const Module = () => {
     setEditingSlideId(null); // Exit editing mode
   };
   
-  // const handleSaveSlide = async (moduleIndex) => {
-  //   try {
-  //     const module = modules[moduleIndex];
-  //     if (!module || !module._id) {
-  //       console.error("Invalid module");
-  //       return;
-  //     }
-  //     console.log(newSlideName);
-  //     const moduleId = module._id;
-  //     // Check if it's a quiz slide and has necessary information
-  //     if (selectedSlideType === "Quiz Slide" && questions.length > 0) {
-  //       const response = await fetch(`/api/slide?courseId=${courseId}`, {
-  //         method: "POST",
-  //         headers: {
-  //           "Content-Type": "application/json",
-  //         },
-  //         body: JSON.stringify({
-  //           moduleId: moduleId,
-  //           slide_name: newSlideName,
-  //           slide_type: selectedSlideType,
-  //           questions: questions,
-  //           bodyType:bodyType,
-  //           slide_body:newSlideBody,
-  //         }),
-  //       });
-
-  //       if (!response.ok) {
-  //         console.error("Error adding quiz slide:", response.statusText);
-  //         return;
-  //       }
-
-  //       const newSlide = await response.json();
-  //       const updatedModules = [...modules];
-  //       const updatedModule = { ...module };
-
-  //       updatedModule.slides.push(newSlide);
-  //       updatedModules[moduleIndex] = updatedModule;
-  //       setModules(updatedModules);
-
-  //       setMappedSlides([...mappedSlides, { ...newSlide, moduleIndex }]);
-  //       setShowAddSlideInput(false);
-  //       setNewSlideName("");
-  //       setSelectedModuleIndex(null);
-  //       setSelectedSlideType("Topic Introduction Slide");
-  //       setNewSlideBody("");
-  //       setQuestions([
-  //         { question: "", options: ["", ""], correctOptionIndex: null },
-  //       ]);
-  //     } else {
-  //       console.log("Saving non-quiz slide...");
-  //       const response = await fetch(`/api/slide?courseId=${courseId}`, {
-  //         method: "POST",
-  //         headers: {
-  //           "Content-Type": "application/json",
-  //         },
-  //         body: JSON.stringify({
-  //           moduleId: moduleId,
-  //           slide_name: newSlideName,
-  //           slide_type: selectedSlideType,
-  //           slide_body:newSlideBody,
-  //           bodyType:bodyType
-  //         }),
-  //       });
-
-  //       if (!response.ok) {
-  //         console.error("Error adding quiz slide:", response.statusText);
-  //         return;
-  //       }
-  //       const updatedModules = [...modules];
-  //       const updatedModule = { ...module };
-  //       updatedModule.slides.push(newSlide);
-  //       updatedModules[moduleIndex] = updatedModule;
-  //       setModules(updatedModules);
-  //       setMappedSlides([...mappedSlides, { ...newSlide, moduleIndex }]);
-  //       setShowAddSlideInput(false);
-  //       setNewSlideName("");
-  //       setSelectedModuleIndex(null);
-  //       setSelectedSlideType("Topic Introduction Slide");
-  //       setNewSlideBody("");
-  //     }
-  //   } catch (error) {
-  //     console.error("Error adding slide:", error);
-  //   }
-  // };
   const handleCorrectOptionIndexChange = (e, questionIndex) => {
     const updatedQuestions = questions.map((question, qIndex) => {
       if (qIndex === questionIndex) {
@@ -469,7 +376,25 @@ const Module = () => {
       setCurrentConcept(''); // Clear the input field
     }
   };
+  const handleDeleteModule = async (moduleId) => {
+    try {
+      const response = await fetch(`/api/module?courseId=${courseId}&moduleId=${moduleId}`, {
+        method: "DELETE",
+      });
 
+      if (response.ok) {
+        const updatedModules = modules.filter(module => module._id !== moduleId);
+        setModules(updatedModules);
+        alert('Module deleted successfully');
+      } else {
+        console.error("Error deleting module:", response.statusText);
+      }
+    } catch (error) {
+      console.error("Error deleting module:", error);
+    }
+  };
+
+  
   // Function to handle input changes
   const handleInputChange = (e) => {
     setCurrentConcept(e.target.value);
@@ -495,7 +420,16 @@ const Module = () => {
                   value={newModuleName}
                   onChange={(e) => setNewModuleName(e.target.value)}
                 />
-
+                <label htmlFor="newModuleDetails">
+                  <h3>Module Details:</h3>
+                </label>
+                <input
+                  type="text"
+                  id="newModuleDetails"
+                  value={newModuleDetails}
+                  onChange={(e) => setNewModuleDetails(e.target.value)}
+                />
+      
                 <div className={styles.popupButtons}>
                   <button onClick={handleSaveModule}>Save</button>
                   <button onClick={handleClosePopup}>Close</button>
@@ -509,15 +443,22 @@ const Module = () => {
             modules.map((module, moduleIndex) => (
               <div key={moduleIndex} className={styles.moduledetails}>
                 <div>
-                  <h3>Module Name</h3>
-                  <p>{module.module_name}</p>
+                  <div className={styles.modulealignment}>
+                    <div>
+                  <h4>{module.module_name}</h4>
+                   <p>{module.details}</p>
                   <button
                     className={styles.slidebutton}
                     onClick={() => handleAddSlide(moduleIndex)}
                   >
                     Add Slides
                   </button>
-
+                  </div>
+                  <div className={styles.deletemodulebtn}>
+                  <button onClick={() => handleDeleteModule(module._id)}>Delete</button>
+                  <button onClick={() => handleEditModule(module._id)}>Edit</button>
+                  </div>
+                  </div>
                   {
   showAddSlideInput && selectedModuleIndex === moduleIndex && (
     <div className={styles.slideInputContainer}>
@@ -661,12 +602,12 @@ const Module = () => {
                           </button>
                         </div>
                       )}
-      <button onClick={() => handleSaveSlide(moduleIndex)}>
-        Save Slide
-      </button>
-    </div>
-  )
-}
+                    <button onClick={() => handleSaveSlide(moduleIndex)}>
+                     Save Slide
+                    </button>
+                    </div>
+                    )
+                   }
                   <div className={styles.mappedSlides}>
                     {mappedSlides &&
                       mappedSlides

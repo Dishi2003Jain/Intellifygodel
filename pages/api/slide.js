@@ -31,7 +31,7 @@ export default async function handler(req, res) {
 }
 
 async function handlePostRequest(req, res, courseId) {
-  const { moduleId, slide_name, slide_type, slide_body, questions, bodyType , why_learn} = req.body;
+  const { moduleId, slide_name, slide_type, slide_body, questions, bodyType , why_learn , concepts} = req.body;
    
   if (!moduleId || !slide_name || !slide_type || !courseId) {
     return res.status(400).json({ error: 'Missing required fields' });
@@ -57,7 +57,6 @@ async function handlePostRequest(req, res, courseId) {
     module.bodyTypeCounts[bodyType] = (module.bodyTypeCounts[bodyType] || 0) + 1;
 
     const slideSlug = slugify(slide_name, { lower: true });
-
     const newSlide = {
       moduleId,
       slide_name,
@@ -66,7 +65,8 @@ async function handlePostRequest(req, res, courseId) {
       questions: questions || [],
       slug: slideSlug,
       bodyType,
-      why_learn
+      why_learn,
+      concepts,
     };
 
     module.slides.push(newSlide);

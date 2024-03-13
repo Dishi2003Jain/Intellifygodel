@@ -179,6 +179,7 @@ const Module = () => {
       why_learn: newSlideMedia ? newSlideMedia : undefined,
       bodyType: bodyType,
       questions: questions,
+      concepts:concepts,
     };
   
     try {
